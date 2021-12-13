@@ -9,7 +9,7 @@ const {
 const path = require('path')
 const url = require('url')
 const fs = require('fs')
-const openAboutWindow = require('about-window').default
+// const openAboutWindow = require('about-window').default
 const isDev = require('electron-is-dev')
 const storage = require('electron-json-storage')
 
@@ -59,21 +59,21 @@ function createMenu(theme, sort) {
     }
   }
 
-  let info = {
+  const info = {
     label: 'Info',
     click: function () {
-      openAboutWindow({
-        product_name: 'Dusk Player',
-        homepage: 'https://home.aveek.io',
-        copyright: 'By Aveek Saha',
-        description: 'A minimal music player for your desktop',
-        license: 'MIT',
-        icon_path: path.join(__dirname, 'build/icon.png')
-      })
+      // openAboutWindow({
+      //   product_name: 'Dusk Player',
+      //   homepage: 'https://home.aveek.io',
+      //   copyright: 'By Aveek Saha',
+      //   description: 'A minimal music player for your desktop',
+      //   license: 'MIT',
+      //   icon_path: path.join(__dirname, 'build/icon.png')
+      // })
     }
   }
 
-  var theme = {
+  theme = {
     label: 'Theme',
     submenu: [
       {
@@ -97,7 +97,7 @@ function createMenu(theme, sort) {
     ]
   }
 
-  var sort = {
+  sort = {
     label: 'Sort',
     submenu: [
       {
@@ -154,19 +154,19 @@ function createMenu(theme, sort) {
       ]
     }
 
-    info = {
+    const info = {
       label: 'Info',
       submenu: [
         {
           label: 'Show info',
 
           click: function () {
-            openAboutWindow({
-              product_name: 'Dusk Player',
-              homepage: 'https://home.aveek.io',
-              copyright: 'By Aveek Saha',
-              icon_path: path.join(__dirname, 'build/icon.png')
-            })
+            // openAboutWindow({
+            //   product_name: 'Dusk Player',
+            //   homepage: 'https://home.aveek.io',
+            //   copyright: 'By Aveek Saha',
+            //   icon_path: path.join(__dirname, 'build/icon.png')
+            // })
           }
         }
       ]
@@ -234,7 +234,8 @@ function createWindow() {
   )
 
   // Open the DevTools.
-  if (isDev) win.webContents.openDevTools()
+  // if (isDev) 
+  win.webContents.openDevTools()
 
   win.on('close', e => {
     if (status == 0) {
@@ -253,7 +254,7 @@ function createWindow() {
 
 ipcMain.on('closed', () => {
   status = 1
-  mainWindow = null
+  // mainWindow = null
   if (process.platform !== 'darwin') {
     app.quit()
   }
@@ -294,28 +295,28 @@ function openFolderDialog() {
   )
 }
 
-var walkSync = function (dir, filelist) {
-  files = fs.readdirSync(dir)
-  filelist = filelist || []
-  files.forEach(function (file) {
-    if (fs.statSync(path.join(dir, file)).isDirectory()) {
-      filelist = walkSync(path.join(dir, file), filelist)
-    } else {
-      if (
-        file.endsWith('.mp3') ||
-        file.endsWith('.m4a') ||
-        file.endsWith('.webm') ||
-        file.endsWith('.wav') ||
-        file.endsWith('.aac') ||
-        file.endsWith('.ogg') ||
-        file.endsWith('.opus')
-      ) {
-        filelist.push(path.join(dir, file))
-      }
-    }
-  })
-  return filelist
-}
+// var walkSync = function (dir, filelist) {
+//   files = fs.readdirSync(dir)
+//   filelist = filelist || []
+//   files.forEach(function (file) {
+//     if (fs.statSync(path.join(dir, file)).isDirectory()) {
+//       filelist = walkSync(path.join(dir, file), filelist)
+//     } else {
+//       if (
+//         file.endsWith('.mp3') ||
+//         file.endsWith('.m4a') ||
+//         file.endsWith('.webm') ||
+//         file.endsWith('.wav') ||
+//         file.endsWith('.aac') ||
+//         file.endsWith('.ogg') ||
+//         file.endsWith('.opus')
+//       ) {
+//         filelist.push(path.join(dir, file))
+//       }
+//     }
+//   })
+//   return filelist
+// }
 
 function scanDir(filePath) {
   if (!filePath || filePath[0] == 'undefined') return
