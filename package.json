@@ -29,18 +29,18 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
-    "use-draggable-scroll": "^0.1.0"
+    "use-draggable-scroll": "^0.1.0",
+    "about-window": "^1.13.4",
+    "popper.js": "^1.16.1",
+    "electron-is-dev": "^1.2.0"
   },
   "devDependencies": {
+    "electron": "^7.3.3",
     "@electron-forge/cli": "^6.0.0-beta.61",
     "@electron-forge/maker-deb": "^6.0.0-beta.61",
     "@electron-forge/maker-rpm": "^6.0.0-beta.61",
     "@electron-forge/maker-squirrel": "^6.0.0-beta.61",
     "@electron-forge/maker-zip": "^6.0.0-beta.61",
-    "about-window": "^1.13.4",
-    "electron": "^7.3.3",
-    "electron-is-dev": "^1.2.0",
-    "popper.js": "^1.16.1",
     "wait-on": "^6.0.0"
   },
   "scripts": {
@@ -51,8 +51,8 @@
     "dev": "concurrently -k \"BROWSER=none npm start\" \"npm:electron\"",
     "electron": "wait-on tcp:3000 && electron-forge start",
     "package": "react-scripts build && electron-forge package",
-    "make": "react-scripts build && electron-forge make",
-    "makeonly": "electron-forge make"
+    "make": "react-scripts build && electron-forge make --arch x64 --targets @electron-forge/maker-deb",
+    "make:raspi": "electron-forge make --arch armv7l --targets @electron-forge/maker-deb"
   },
   "eslintConfig": {
     "extends": [
