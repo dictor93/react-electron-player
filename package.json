@@ -1,8 +1,18 @@
 {
+  "linux": {
+    "target": {
+      "target": "appimage",
+      "arch": [
+        "armv7l"
+      ]
+    }
+  },
   "name": "react-player",
   "version": "0.1.0",
   "private": true,
   "main": "public/electron.js",
+  "description": "React & electron audioplayer",
+  "author": "Viktor",
   "dependencies": {
     "@emotion/react": "^11.7.0",
     "@emotion/styled": "^11.6.0",
@@ -39,9 +49,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "dev": "concurrently -k \"BROWSER=none npm start\" \"npm:electron\"",
-    "electron": "wait-on tcp:3000 && electron .",
-    "package": "electron-forge package",
-    "make": "electron-forge make"
+    "electron": "wait-on tcp:3000 && electron-forge start",
+    "package": "react-scripts build && electron-forge package",
+    "make": "react-scripts build && electron-forge make"
   },
   "eslintConfig": {
     "extends": [
