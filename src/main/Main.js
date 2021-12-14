@@ -469,8 +469,7 @@ export const Main = () => {
           setPaused={paused => paused ? player.pause() : player.play()}
           onNext={() => player.skip()}
           onPrev={() => {
-            const lastSong = player.index >= player.playlist.length - 1
-            player.skip(lastSong ? 0 : player.index + 1)
+            player.skip('prev')
           }}
           volume={volume}
           onSetVolume={value => {
