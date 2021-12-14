@@ -234,8 +234,7 @@ function createWindow() {
   )
 
   // Open the DevTools.
-  // if (isDev) 
-  win.webContents.openDevTools()
+  if (isDev) win.webContents.openDevTools()
 
   win.on('close', e => {
     if (status == 0) {
