@@ -13,26 +13,29 @@
   "main": "public/electron.js",
   "description": "React & electron audioplayer",
   "author": "Viktor",
+  "homepage": "./",
   "dependencies": {
     "@emotion/react": "^11.7.0",
     "@emotion/styled": "^11.6.0",
     "@mui/icons-material": "^5.2.1",
     "@mui/material": "^5.2.3",
     "@mui/styles": "^5.2.3",
+    "@rescripts/cli": "0.0.16",
+    "about-window": "^1.13.4",
     "concurrently": "^5.3.0",
     "cra-template": "1.1.2",
+    "electron-is-dev": "^1.2.0",
     "electron-json-storage": "^4.3.0",
     "electron-reload": "^1.5.0",
     "electron-squirrel-startup": "^1.0.0",
     "howler": "^2.2.1",
     "music-metadata": "^6.4.0",
+    "popper.js": "^1.16.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
-    "use-draggable-scroll": "^0.1.0",
-    "about-window": "^1.13.4",
-    "popper.js": "^1.16.1",
-    "electron-is-dev": "^1.2.0"
+    "save-dev": "0.0.1-security",
+    "use-draggable-scroll": "^0.1.0"
   },
   "devDependencies": {
     "electron": "^7.3.3",
@@ -44,14 +47,15 @@
     "wait-on": "^6.0.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "rescripts start",
+    "build": "rescripts build",
+    "test": "rescripts test",
     "eject": "react-scripts eject",
     "dev": "concurrently -k \"BROWSER=none npm start\" \"npm:electron\"",
     "electron": "wait-on tcp:3000 && electron-forge start",
     "package": "react-scripts build && electron-forge package",
-    "make": "react-scripts build && electron-forge make --arch x64 --targets @electron-forge/maker-deb",
+    "make": "rescripts build && electron-forge make --arch x64 --targets @electron-forge/maker-deb",
+    "make:built": "electron-forge make --arch x64 --targets @electron-forge/maker-deb",
     "make:raspi": "electron-forge make --arch armv7l --targets @electron-forge/maker-deb"
   },
   "eslintConfig": {
@@ -98,5 +102,12 @@
         }
       ]
     }
+  },
+  "build": {
+    "files": [
+      "build/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ]
   }
 }
