@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef, memo, useState } from 'react'
 import {
   Box,
   List,
@@ -9,6 +9,7 @@ import {
 } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import useDraggableScroll from 'use-draggable-scroll'
+import { ExpandLess, ExpandMore } from '@mui/icons-material'
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -27,14 +28,32 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-const Playlist = ({
+const Playlist = memo(function Playlist({
   songList = [],
-  onSelectSong,
+  player,
   selectedSong,
-}) => {
+}) {
   const ref = useRef(null)
+  const itemRef = useRef(null)
   const { onMouseDown } = useDraggableScroll(ref)
   const classes = useStyles()
+  const [expanded, setExpanded] = useState({})
+  useEffect(() => {
+    if (itemRef?.current && ref?.current) {
+      ref.current.scrollTop = itemRef.current.offsetTop
+    }
+  }, [itemRef.current])
+
+  useEffect(() => {
+    if (songList && songList[selectedSong]) {
+      const { dir } = songList[selectedSong]
+      if (!expanded[dir]) {
+        setExpanded({ [dir]: true })
+      }
+    }
+
+  }, [songList[selectedSong]])
+
   return (
     <Box
       width="100%"
@@ -50,23 +69,47 @@ const Playlist = ({
         <List>
           {songList.map((song, index) => (
             <>
+              {
+                songList && songList[index - 1]?.dir !== song.dir && (
+                  <ListItem
+                    sx={{
+                      // backgroundColor: selectedSong === index ? '#c5c5c5' : 'inherit',
+                      // paddingLeft: 2,
+                    }}
+                    key={song.dir}
+                    disablePadding
+                    ref={selectedSong === index ? itemRef : null}
+                  >
+                    <ListItemButton onClick={() => setExpanded({ ...expanded, [song.dir]: !expanded[song.dir] })}>
+                      <ListItemText>{song.dir}  {expanded[song.dir] ? <ExpandLess /> : <ExpandMore />}</ListItemText>
+                    </ListItemButton>
+                  </ListItem>
+                )
+              }
               <ListItem
                 sx={{
                   backgroundColor: selectedSong === index ? '#c5c5c5' : 'inherit',
+                  // paddingLeft: 2,
+                  maxHeight: expanded[song.dir] ? 'initial' : 0,
+                  overflow: 'hidden'
                 }}
                 key={song.file + 'item'}
                 disablePadding
+                ref={selectedSong === index ? itemRef : null}
               >
-                <ListItemButton onClick={() => onSelectSong(index)}>
-                  <ListItemText>{song.name}</ListItemText>
+                <ListItemButton onClick={() => player.skipTo(index)}>
+                <Divider orientation="vertical" flexItem sx={{ borderRightColor: 'ButtonText' }} /><ListItemText>- {song.name}</ListItemText>
                 </ListItemButton>
               </ListItem>
               <Divider key={song.file + 'divider'} />
+              {
+
+              }
             </>
           ))}
         </List>
       </nav>
     </Box>
   )
-}
+})
 export default Playlist

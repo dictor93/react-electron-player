@@ -126,10 +126,11 @@ export const Main = () => {
           file.endsWith('.ogg') ||
           file.endsWith('.opus')
         ) {
-          filelist.push(path.join(dir, file))
+          filelist.push({ file: path.join(dir, file), dir: dir.replace(/\/$/, '').split('/').pop() })
         }
       }
     })
+    console.log(filelist)
     return filelist
   }
 
@@ -168,13 +169,16 @@ export const Main = () => {
         persistent: true
     }))
 
-    const arr = walkSync(filePath)
+    const arr = walkSync(filePath)?.sort(({ dir: dirPrev }, { dir }) => dirPrev < dir ? 1 : -1)
+    const fileArr = arr.map(({ file }) => file)
     const arg = {}
-    const names = await parseFiles(arr)
+    const names = await parseFiles(fileArr)
 
-    arg.files = arr
+    arg.files = fileArr
     arg.path = filePath
     arg.names = names
+    arg.folders = arr.map(({ dir }) => dir)
+    console.log('folders', arg.folders)
     startPlayer(arg)
   }
 
@@ -290,6 +294,7 @@ export const Main = () => {
         artist: arg.names[i].artist,
         date: arg.names[i].modDate,
         howl: null,
+        dir: arg.folders[i],
         index: i
       })
     }
@@ -452,7 +457,7 @@ export const Main = () => {
         flexGrow={1}
         overflow="auto"
       >
-        <Playlist songList={songList} onSelectSong={index => player.skipTo(index)} selectedSong={currentIndex} />
+        <Playlist songList={songList} player={player} selectedSong={currentIndex} />
         <Info
           trackAlbum={trackAlbum}
           trackArtist={trackArtist}
