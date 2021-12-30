@@ -183,9 +183,10 @@ let win
 function createWindow() {
   // Create the browser window.
   win = new BrowserWindow({
-    // fullscreen: true,
+    fullscreen: true,
     width: 1000,
     height: 620,
+    title: 'Carplayer',
     icon: __dirname + '/dusk.png',
     webPreferences: {
       nodeIntegration: true,
