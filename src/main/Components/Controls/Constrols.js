@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Slider, Stack, Typography } from '@mui/material'
 import {
   Box,
@@ -28,6 +28,15 @@ const Controls = ({
   volume,
   onSetVolume,
 }) => {
+  const [slidervalue, setSliderValue] = useState(0)
+  const [clicked, setClicked] = useState(false)
+
+  useEffect(() => {
+    if(!clicked) {
+      setSliderValue(seek / duration * 100)
+    }
+  }, [clicked, seek])
+
   const formatTime = secs => {
     const minutes = Math.floor(secs / 60) || 0
     const seconds = secs - minutes * 60 || 0
@@ -59,8 +68,11 @@ const Controls = ({
           }}
           color="secondary"
           aria-label="Volume"
-          value={seek / duration * 100}
-          onChange={(_, value) => setSeek(value)}
+          value={slidervalue}
+          onMouseDown={() => setClicked(true)}
+          onMouseUp={() => setClicked(false)}
+          onChange={(_, value) => setSliderValue(value)}
+          onChangeCommitted={(_, value) => setSeek(value)}
         />
       </Stack>
       <Box
