@@ -60,7 +60,7 @@ Player.prototype = {
             self.pusAction(DURATION, duration)
             self.sekkInterval = setInterval(() => {
               self.pusAction(SEEK_UPDATE, self.sound?.seek())
-            }, 33)
+            }, 1000)
           },
           onend: function () {
             // if (shuffle) {
