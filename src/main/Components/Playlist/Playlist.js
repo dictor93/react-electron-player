@@ -47,9 +47,7 @@ const Playlist = memo(function Playlist({
   useEffect(() => {
     if (songList && songList[selectedSong]) {
       const { dir } = songList[selectedSong]
-      if (!expanded[dir]) {
-        setExpanded({ [dir]: true })
-      }
+      setExpanded({ [dir]: true })
     }
 
   }, [songList[selectedSong]])
