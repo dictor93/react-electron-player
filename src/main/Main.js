@@ -24,13 +24,10 @@ const chokidar = window.require('chokidar')
 export const Main = () => {
   const [songPlaying, setSongPlaying] = useState(false)
   const [songList, setSongList] = useState([])
-  const [image, setImage] = useState('')
   const [currentIndex, setCurrentindex] = useState()
   // const [player, setPlayer] = useState(null)
   const [volume, setVolume] = useState(100)
-  const [trackArtist, setTrackArtist] = useState()
-  const [trackAlbum, setTrackAlbum] = useState()
-  const [trackName, setTrackName] = useState()
+  const [trackInfo, setTrackInfo] = useState({})
   const [seek, setSeek] = useState(0)
   const [duration, setDuration] = useState(0)
   const [watcher, setWatcher] = useState()
@@ -130,7 +127,6 @@ export const Main = () => {
         }
       }
     })
-    console.log(filelist)
     return filelist
   }
 
@@ -178,7 +174,6 @@ export const Main = () => {
     arg.path = filePath
     arg.names = names
     arg.folders = arr.map(({ dir }) => dir)
-    console.log('folders', arg.folders)
     startPlayer(arg)
   }
 
@@ -332,15 +327,20 @@ export const Main = () => {
         const artist = metadata.common.artist
         const album = metadata.common.album
 
-        setTrackName(title || audioFile.split(path.sep).slice(-1)[0])
-        setTrackArtist(artist || '')
-        setTrackAlbum(album || '')
+        let image = null
         if (metadata.common.picture) {
           const picture = metadata.common.picture[0]
-          setImage(`data:${picture.format};base64,${picture.data.toString('base64')}`)
-        } else {
-          setImage(null)
+          image = `data:${picture.format};base64,${picture.data.toString('base64')}`
         }
+        const trackName = title || audioFile.split(path.sep).slice(-1)[0]
+        const trackArtist = artist || ''
+        const trackAlbum = album || ''
+        setTrackInfo({
+          image,
+          trackName,
+          trackArtist,
+          trackAlbum,
+        })
       })
       .catch(err => {
         console.error(err.message)
@@ -459,10 +459,7 @@ export const Main = () => {
       >
         <Playlist songList={songList} player={player} selectedSong={currentIndex} />
         <Info
-          trackAlbum={trackAlbum}
-          trackArtist={trackArtist}
-          image={image}
-          trackName={trackName}
+          {...trackInfo}
         />
       </Box>
       <Box flexGrow={1}>
