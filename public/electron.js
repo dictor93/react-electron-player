@@ -181,9 +181,7 @@ function createMenu(theme, sort) {
 let win
 
 function createWindow() {
-  // Create the browser window.
   win = new BrowserWindow({
-    fullscreen: true,
     width: 1000,
     height: 620,
     title: 'Carplayer',
@@ -194,6 +192,9 @@ function createWindow() {
       backgroundThrottling: false
     }
   })
+
+  win.maximize()
+  win.show()
 
   const light = false
   let dark = false
