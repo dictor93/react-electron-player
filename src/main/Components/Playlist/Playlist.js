@@ -89,14 +89,15 @@ const Playlist = memo(function Playlist({
                   backgroundColor: selectedSong === index ? '#c5c5c5' : 'inherit',
                   // paddingLeft: 2,
                   maxHeight: expanded[song.dir] ? 'initial' : 0,
-                  overflow: 'hidden'
+                  overflow: 'hidden',
+                  color: selectedSong === index ? 'text.secondary' : 'inherit'
                 }}
                 key={song.file + 'item'}
                 disablePadding
                 ref={selectedSong === index ? itemRef : null}
               >
-                <ListItemButton onClick={() => player.skipTo(index)}>
-                <Divider orientation="vertical" flexItem sx={{ borderRightColor: 'ButtonText' }} /><ListItemText>- {song.name}</ListItemText>
+                <ListItemButton onClick={() => player.skipTo(index)} sx={{ paddingTop: 0, paddingBottom: 0 }}>
+                <Divider orientation="vertical" flexItem sx={{ borderRightColor: 'inherit' }} /><ListItemText>- {song.name}</ListItemText>
                 </ListItemButton>
               </ListItem>
               <Divider key={song.file + 'divider'} />

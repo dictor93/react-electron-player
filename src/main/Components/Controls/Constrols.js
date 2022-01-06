@@ -14,8 +14,8 @@ import {
   VolumeDownRounded,
 } from '@mui/icons-material/'
 
-const lightIconColor = '#909090'
-const mainIconColor = '434343'
+// const lightIconColor = '#909090'
+// const mainIconColor = '434343'
 
 const Controls = ({
   seek,
@@ -83,8 +83,8 @@ const Controls = ({
             mt: -2,
           }}
         >
-          <Typography variant="caption" color="HighlightText">{stringSeek}</Typography>
-          <Typography variant="caption" color="HighlightText">{stringDuration}</Typography>
+          <Typography variant="caption">{stringSeek}</Typography>
+          <Typography variant="caption">{stringDuration}</Typography>
         </Box>
         <Box
           sx={{
@@ -94,29 +94,30 @@ const Controls = ({
             mt: -1,
           }}
         >
-          <IconButton size="large" onClick={() => onPrev()} aria-label="previous song">
-            <FastRewindRounded fontSize="large" htmlColor={mainIconColor} />
+          <IconButton size="large" onClick={() => onPrev()} aria-label="previous song" color="primary">
+            <FastRewindRounded fontSize="large" />
           </IconButton>
           <IconButton
             aria-label={paused ? 'play' : 'pause'}
             onClick={() => setPaused(!paused)}
             size="large"
+            color="primary"
           >
             {paused ? (
               <PlayArrowRounded
                 sx={{ fontSize: '3rem' }}
-                htmlColor={mainIconColor}
+                // htmlColor={mainIconColor}
               />
             ) : (
-              <PauseRounded sx={{ fontSize: '3rem' }} htmlColor={mainIconColor} />
+              <PauseRounded sx={{ fontSize: '3rem' }} />
             )}
           </IconButton>
-          <IconButton size="large" onClick={() => onNext()} aria-label="next song">
-            <FastForwardRounded fontSize="large" htmlColor={mainIconColor} />
+          <IconButton size="large" onClick={() => onNext()} aria-label="next song" color="primary">
+            <FastForwardRounded fontSize="large" />
           </IconButton>
         </Box>
         <Stack spacing={2} direction="row" sx={{ mb: 1, px: 1 }} alignItems="center">
-          <VolumeDownRounded htmlColor={lightIconColor} />
+          <VolumeDownRounded/>
           <Slider
             aria-label="Volume"
             value={volume}
@@ -124,7 +125,7 @@ const Controls = ({
             sx={{
               height: 26,
               borderRadius: 26,
-              color: lightIconColor,
+              color: 'text.disabled',
               '& .MuiSlider-track': {
                 border: 'none',
               },
@@ -141,7 +142,7 @@ const Controls = ({
               },
             }}
           />
-          <VolumeUpRounded htmlColor={lightIconColor} />
+          <VolumeUpRounded />
         </Stack>
     </Box>
   )

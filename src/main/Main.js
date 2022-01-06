@@ -11,6 +11,7 @@ import Playlist from './Components/Playlist'
 import { Box } from '@mui/system'
 import Controls from './Components/Controls'
 import Info from './Components/Info'
+import { makeStyles } from '@mui/styles'
 
 const ipc = window.require('electron').ipcRenderer
 const fs = window.require('fs')
@@ -156,6 +157,13 @@ export const Main = () => {
 
     return titles
   }
+
+  const useStyles = makeStyles(theme => ({
+    wrapper: {
+      backgroundColor: theme.palette.background.default,
+      color: theme.palette.text.primary,
+    }
+  }))
 
   async function scanDir(filePath) {
     if (!filePath || filePath == 'undefined') return
@@ -441,6 +449,7 @@ export const Main = () => {
       }
     })
   }, [])
+  const styles = useStyles()
   return (
     <Box
       maxHeight="100vh"
@@ -450,6 +459,7 @@ export const Main = () => {
       flexDirection="column"
       justifyContent="space-between"
       p={2}
+      className={styles.wrapper}
     >
       <Box
         display="flex"
