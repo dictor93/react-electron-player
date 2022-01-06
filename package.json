@@ -55,8 +55,8 @@
     "electron": "wait-on tcp:3000 && electron-forge start",
     "package": "react-scripts build && electron-forge package",
     "make": "rescripts build && electron-forge make --arch x64 --targets @electron-forge/maker-deb",
-    "make:built": "electron-forge make --arch x64 --targets @electron-forge/maker-deb",
-    "make:raspi": "electron-forge make --arch armv7l --targets @electron-forge/maker-deb"
+    "make:built": "rescripts build && electron-forge make --arch x64 --targets @electron-forge/maker-deb",
+    "make:raspi": "rescripts build && electron-forge make --arch armv7l --targets @electron-forge/maker-deb"
   },
   "eslintConfig": {
     "extends": [
